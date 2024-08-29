@@ -1,0 +1,22 @@
+services:
+  db:
+    container_name: poten-db
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: neonadeuli
+      MYSQL_ROOT_PASSWORD: 1234
+      TZ: Asia/Seoul
+      character-set-server: 'utf8mb4'
+      collation-server: 'utf8mb4_unicode_ci'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d
+    command:
+        - "mysqld"
+        - "--character-set-server=utf8mb4"
+        - "--collation-server=utf8mb4_unicode_ci"
+        - "--lower_case_table_names=1" # 테이블 이름은 디스크에 소문자로 저장되며, 이름 비교는 대소문자를 구분하지 않습니다.
