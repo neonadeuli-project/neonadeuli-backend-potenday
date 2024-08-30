@@ -5,7 +5,7 @@
 <b>Mobile AI National Heritage Interpretation Service</b>
 
 <img src="https://github.com/user-attachments/assets/3884c8e5-69b9-4835-ba99-7e285d7bb579" 
-    style="height: 150px; width: 100%; 
+    style="height: 200px; width: 100%; 
             object-fit: cover; 
             border-radius: 20px;" >
 
