@@ -1,0 +1,4 @@
+[submodule "potenday-neonadeuli"]
+	path = potenday-neonadeuli
+	url = https://github.com/viaunixue/neonadeuli-backend.git
+	branch = main
