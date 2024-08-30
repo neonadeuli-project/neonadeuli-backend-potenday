@@ -424,39 +424,39 @@ UserBookmark {
 
 |URL|페이지 설명|GET|POST|PUT|DELETE|
 |------|---|:---:|:---:|:---:|:---:|
-|/api/v1/users/login|임시 로그인| |✅| | |
-|/api/v1/users/validate_token|유저 토큰 검사|✅| | | |
-|/api/v1/users/logout|로그아웃| |✅| | |
+|/users/login|임시 로그인| |✅| | |
+|/users/validate_token|유저 토큰 검사|✅| | | |
+|/users/logout|로그아웃| |✅| | |
 
 ### chat
 
 |URL|페이지 설명|GET|POST|PUT|DELETE|
 |------|---|:---:|:---:|:---:|:---:|
-|/api/v1/chat/sessions|채팅 세션 생성| |✅| |
-|/api/v1/chat/sessions/{session_id}/message|채팅 메시지 전송| |✅| | | 
-|/api/v1/chat/{session_id}/heritage/buildings/info|건축물 정보 제공| |✅| | | 
-|/api/v1/chat/{session_id}/heritage/buildings/quiz|건축물 퀴즈 제공| |✅| | |
-|/api/v1/chat/{session_id}/heritage/building/recommend-questions|건축물 기반 추천 질문| |✅| | | 
-|/api/v1/chat/{session_id}/heritage/message/recommend-questions|메시지 기반 추천 질문|✅| | | |
-|/api/v1/chat/{session_id}/summary|채팅 요약|✅| | | | 
-|/api/v1/chat/{session_id}/end|채팅 종료| |✅| | | 
-|/api/v1/chat/{session_id}/status|채팅 세션 상태 확인|✅| | | | 
+|/chat/sessions|채팅 <br> 세션 생성| |✅| |
+|/chat/sessions/{session_id}/message|채팅 <br> 메시지 전송| |✅| | | 
+|/chat/{session_id}/heritage/buildings/info|건축물 <br> 정보 제공| |✅| | | 
+|/chat/{session_id}/heritage/buildings/quiz|건축물 <br> 퀴즈 제공| |✅| | |
+|/chat/{session_id}/heritage/building/recommend-questions|건축물 기반 <br> 추천 질문| |✅| | | 
+|/chat/{session_id}/heritage/message/recommend-questions|메시지 기반 <br> 추천 질문|✅| | | |
+|/chat/{session_id}/summary|채팅 요약|✅| | | | 
+|/chat/{session_id}/end|채팅 종료| |✅| | | 
+|/chat/{session_id}/status|채팅 세션 <br> 상태 확인|✅| | | | 
 
 ### heritages
 
 |URL|페이지 설명|GET|POST|PUT|DELETE|
 |------|---|:---:|:---:|:---:|:---:|
-|/api/v1/heritages/lists|국가유산 조회|✅| | | 
-|/api/v1/heritages/{heritage_id}/details|국가유산 상세 조회|✅| | | 
+|/heritages/lists|국가유산 조회|✅| | | 
+|/heritages/{heritage_id}/details|국가유산 <br> 상세 조회|✅| | | 
 
 ### image
 
 |URL|페이지 설명|GET|POST|PUT|DELETE|
 |------|---|:---:|:---:|:---:|:---:|
-|/api/v1/image/update-heritage|국가유산 이미지 수정| |✅| |
-|/api/v1/image/heritage/{heritage_id}/add-building|내부 건축물 이미지 추가| |✅| | 
-|/api/v1/image/heritage/{heritage_id}/find-building|내부 건축물 이미지 조회| |✅| |
-|/api/v1/image/delete-building|내부 건축물 이미지 삭제| |✅| |
+|/image/update-heritage|국가유산 <br> 이미지 수정| |✅| |
+|/image/heritage/{heritage_id}/add-building|내부 건축물 <br> 이미지 추가| |✅| | 
+|/image/heritage/{heritage_id}/find-building|내부 건축물 <br> 이미지 조회| |✅| |
+|/image/delete-building|내부 건축물 <br> 이미지 삭제| |✅| |
 
 ## ⛩️ File Tree
 
