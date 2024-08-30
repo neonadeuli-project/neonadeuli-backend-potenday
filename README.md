@@ -5,7 +5,7 @@
 <b>Mobile AI National Heritage Interpretation Service</b>
 
 <img src="https://github.com/user-attachments/assets/3884c8e5-69b9-4835-ba99-7e285d7bb579" 
-    style="height: 300px; width: 100%; 
+    style="height: 150px; width: 100%; 
             object-fit: cover; 
             border-radius: 20px;" >
 
@@ -15,7 +15,7 @@
 
 ## ✨ Project Introduction
 
-### 너나들이를 사용하여 대화형 AI 챗봇과 다양한 콘텐츠를 통해 한국의 국가 유산과 역사를 재미있게 탐구해보세요.
+너나들이를 사용하여 대화형 AI 챗봇과 다양한 콘텐츠를 통해 한국의 국가 유산과 역사를 재미있게 탐구해보세요.
 
 - GPS 기반 실시간 국가유산 탐방 및 코스 추천이 가능합니다.
 - AI 기반 음성 해설 서비스를 제공합니다. 
@@ -256,7 +256,7 @@ UserBookmark {
 
     2. 메시지 기반 추천 질문 생성 : `GET` [https://neonadeuli.life/api/v1/chat/{session_id}/message/recommend-questions](https://neonadeuli.life/api/v1/chat/%7Bsession_id%7D/message/recommend-questions)
 
-        &rarr; 사용자의 질문에 대한 직전 AI 답변을 분석하여 그 다음 추천 질문 3가지를 제공
+        &rarr; 사용자의 질문에 대한 직전 AI 답변을 분석하여 그 다음 추천 질문 3가지를 제공 <br>
         &rarr; 메시지 전송 API에 비동기 처리되어 미리 추천 질문 응답 생성  및 저장 
         ```
         [
@@ -343,7 +343,7 @@ UserBookmark {
     * 예제 URL :
     [https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10&area_code=11&distance_range=1-10&heritage_type=11&heritage_type=13&sort_by=id&sort_order=오름차순](https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10&area_code=11&distance_range=1-10&heritage_type=11&heritage_type=13&sort_by=id&sort_order=%EC%98%A4%EB%A6%84%EC%B0%A8%EC%88%9C)
 
-    * 문화재 이름에 따른 동적 프롬프트 구현을 완료했습니다. 
+    * 문화재 이름에 따른 동적 프롬프트 구현을 완료했습니다. <br>
     이제 사용자가 방문하는 문화재에 대한 챗봇이 시작되면 해당 문화재에 맞는 전용 AI챗봇이 대답해줍니다.
 
     * 이미지 링크 접근 권한 이슈를 해결했습니다. DB에 이미지 추가 후 해당 링크로 이미지 확인이 가능합니다.
@@ -362,7 +362,7 @@ UserBookmark {
 
     네이버 Clova Voice 기능이 추가되었습니다.
 
-    텍스트를 음성으로 변환하여 mp3 파일로 제공됩니다.
+    텍스트를 음성으로 변환하여 mp3 파일로 제공됩니다. <br>
     채팅 메시지 API 응답 값에 추가되어 해당 AI 챗봇의 대답을 음성으로 제공해줍니다.
     
     수정된 채팅 메시지 API 응답 값 예시
@@ -422,41 +422,41 @@ UserBookmark {
 
 ### users
 
-|URL|페이지 설명|GET|POST|PUT|DELETE|로그인 권한| 작성자 권한|
-|------|---|:---:|:---:|:---:|:---:|:---:|:---:|
-|/api/v1/users/login|임시 로그인| |✅| | | | |
-|/api/v1/users/validate_token|유저 토큰 검사|✅| | | | | |
-|/api/v1/users/logout|로그아웃| |✅| | | | |
+|URL|페이지 설명|GET|POST|PUT|DELETE|
+|------|---|:---:|:---:|:---:|:---:|
+|/api/v1/users/login|임시 로그인| |✅| | |
+|/api/v1/users/validate_token|유저 토큰 검사|✅| | | |
+|/api/v1/users/logout|로그아웃| |✅| | |
 
 ### chat
 
-|URL|페이지 설명|GET|POST|PUT|DELETE|로그인 권한| 작성자 권한|
-|------|---|:---:|:---:|:---:|:---:|:---:|:---:|
-|/api/v1/chat/sessions|채팅 세션 생성| |✅| | | |
-|/api/v1/chat/sessions/{session_id}/message|채팅 메시지 전송| |✅| | | | |
-|/api/v1/chat/{session_id}/heritage/buildings/info|건축물 정보 제공| |✅| | | | |
-|/api/v1/chat/{session_id}/heritage/buildings/quiz|건축물 퀴즈 제공| |✅| | | | |
-|/api/v1/chat/{session_id}/heritage/building/recommend-questions|건축물 기반 추천 질문| |✅| | | | |
-|/api/v1/chat/{session_id}/heritage/message/recommend-questions|메시지 기반 추천 질문|✅| | | | | |
-|/api/v1/chat/{session_id}/summary|채팅 요약|✅| | | | | |
-|/api/v1/chat/{session_id}/end|채팅 종료| |✅| | | | |
-|/api/v1/chat/{session_id}/status|채팅 세션 상태 확인|✅| | | | | |
+|URL|페이지 설명|GET|POST|PUT|DELETE|
+|------|---|:---:|:---:|:---:|:---:|
+|/api/v1/chat/sessions|채팅 세션 생성| |✅| |
+|/api/v1/chat/sessions/{session_id}/message|채팅 메시지 전송| |✅| | | 
+|/api/v1/chat/{session_id}/heritage/buildings/info|건축물 정보 제공| |✅| | | 
+|/api/v1/chat/{session_id}/heritage/buildings/quiz|건축물 퀴즈 제공| |✅| | |
+|/api/v1/chat/{session_id}/heritage/building/recommend-questions|건축물 기반 추천 질문| |✅| | | 
+|/api/v1/chat/{session_id}/heritage/message/recommend-questions|메시지 기반 추천 질문|✅| | | |
+|/api/v1/chat/{session_id}/summary|채팅 요약|✅| | | | 
+|/api/v1/chat/{session_id}/end|채팅 종료| |✅| | | 
+|/api/v1/chat/{session_id}/status|채팅 세션 상태 확인|✅| | | | 
 
 ### heritages
 
-|URL|페이지 설명|GET|POST|PUT|DELETE|로그인 권한| 작성자 권한|
-|------|---|:---:|:---:|:---:|:---:|:---:|:---:|
-|/api/v1/heritages/lists|국가유산 조회|✅| | | | |
-|/api/v1/heritages/{heritage_id}/details|국가유산 상세 조회|✅| | | | |
+|URL|페이지 설명|GET|POST|PUT|DELETE|
+|------|---|:---:|:---:|:---:|:---:|
+|/api/v1/heritages/lists|국가유산 조회|✅| | | 
+|/api/v1/heritages/{heritage_id}/details|국가유산 상세 조회|✅| | | 
 
 ### image
 
-|URL|페이지 설명|GET|POST|PUT|DELETE|로그인 권한| 작성자 권한|
-|------|---|:---:|:---:|:---:|:---:|:---:|:---:|
-|/api/v1/image/update-heritage|국가유산 이미지 수정| |✅| | | |
-|/api/v1/image/heritage/{heritage_id}/add-building|내부 건축물 이미지 추가| |✅| | | |
-|/api/v1/image/heritage/{heritage_id}/find-building|내부 건축물 이미지 조회| |✅| | | |
-|/api/v1/image/delete-building|내부 건축물 이미지 삭제| |✅| | | |
+|URL|페이지 설명|GET|POST|PUT|DELETE|
+|------|---|:---:|:---:|:---:|:---:|
+|/api/v1/image/update-heritage|국가유산 이미지 수정| |✅| |
+|/api/v1/image/heritage/{heritage_id}/add-building|내부 건축물 이미지 추가| |✅| | 
+|/api/v1/image/heritage/{heritage_id}/find-building|내부 건축물 이미지 조회| |✅| |
+|/api/v1/image/delete-building|내부 건축물 이미지 삭제| |✅| |
 
 ## ⛩️ File Tree
 
