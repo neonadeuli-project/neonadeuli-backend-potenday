@@ -433,14 +433,14 @@ UserBookmark {
 |URL|페이지 설명|GET|POST|PUT|DELETE|
 |------|---|:---:|:---:|:---:|:---:|
 |/chat/sessions|채팅 <br> 세션 생성| |✅| |
-|/chat/sessions/{session_id}/message|채팅 <br> 메시지 전송| |✅| | | 
-|/chat/{session_id}/heritage/buildings/info|건축물 <br> 정보 제공| |✅| | | 
-|/chat/{session_id}/heritage/buildings/quiz|건축물 <br> 퀴즈 제공| |✅| | |
-|/chat/{session_id}/heritage/building/recommend-questions|건축물 기반 <br> 추천 질문| |✅| | | 
-|/chat/{session_id}/heritage/message/recommend-questions|메시지 기반 <br> 추천 질문|✅| | | |
-|/chat/{session_id}/summary|채팅 요약|✅| | | | 
-|/chat/{session_id}/end|채팅 종료| |✅| | | 
-|/chat/{session_id}/status|채팅 세션 <br> 상태 확인|✅| | | | 
+|/chat/sessions/{s_id}/message|채팅 <br> 메시지 전송| |✅| | | 
+|/chat/{s_id}/heritage/buildings/info|건축물 <br> 정보 제공| |✅| | | 
+|/chat/{s_id}/heritage/buildings/quiz|건축물 <br> 퀴즈 제공| |✅| | |
+|/chat/{s_id}/heritage/building/recommend-questions|건축물 기반 <br> 추천 질문| |✅| | | 
+|/chat/{s_id}/heritage/message/recommend-questions|메시지 기반 <br> 추천 질문|✅| | | |
+|/chat/{s_id}/summary|채팅 요약|✅| | | | 
+|/chat/{s_id}/end|채팅 종료| |✅| | | 
+|/chat/{s_id}/status|채팅 세션 <br> 상태 확인|✅| | | | 
 
 ### heritages
 
