@@ -233,7 +233,9 @@ UserBookmark {
 
     - 추천 질문 API 2가지 방식으로 구현 완료
  
-    1. 건축물 기반 추천 질문 생성 : `POST` [https://neonadeuli.life/api/v1/chat/{session_id}/building/recommend-questions](https://neonadeuli.life/api/v1/chat/%7Bsession_id%7D/building/recommend-questions)
+    1. 건축물 기반 추천 질문 생성 
+    <br>
+    `POST` [https://neonadeuli.life/api/v1/chat/{session_id}/building/recommend-questions](https://neonadeuli.life/api/v1/chat/%7Bsession_id%7D/building/recommend-questions)
 
         &rarr; 사용자가 내부 건축물을 이동 시 새로운 건축물의 building_id를 받아 해당 건축물 관련 추천 질문 3가지를 제공
 
@@ -254,7 +256,9 @@ UserBookmark {
         ```
         <br>
 
-    2. 메시지 기반 추천 질문 생성 : `GET` [https://neonadeuli.life/api/v1/chat/{session_id}/message/recommend-questions](https://neonadeuli.life/api/v1/chat/%7Bsession_id%7D/message/recommend-questions)
+    2. 메시지 기반 추천 질문 생성
+    <br>
+    `GET` [https://neonadeuli.life/api/v1/chat/{session_id}/message/recommend-questions](https://neonadeuli.life/api/v1/chat/%7Bsession_id%7D/message/recommend-questions)
 
         &rarr; 사용자의 질문에 대한 직전 AI 답변을 분석하여 그 다음 추천 질문 3가지를 제공 <br>
         &rarr; 메시지 전송 API에 비동기 처리되어 미리 추천 질문 응답 생성  및 저장 
@@ -266,9 +270,13 @@ UserBookmark {
         ]
         ```
 
-    * 건축물 이미지 추가 API : `POST` [https://neonadeuli.life/api/v1/image/heritage/{heritage_id}/add-building?building_id=1&description=viaunixue&alt_text=네로](https://neonadeuli.life/api/v1/image/heritage/%7Bheritage_id%7D/add-building?building_id=1&description=viaunixue&alt_text=%EB%84%A4%EB%A1%9C)
+    * 건축물 이미지 추가 API
+    <br> 
+    `POST` [https://neonadeuli.life/api/v1/image/heritage/{heritage_id}/add-building?building_id=1&description=viaunixue&alt_text=네로](https://neonadeuli.life/api/v1/image/heritage/%7Bheritage_id%7D/add-building?building_id=1&description=viaunixue&alt_text=%EB%84%A4%EB%A1%9C)
 
-    * 건축물 이미지 조회 API : `POST` [https://neonadeuli.life/api/v1/image/heritage/{heritage_id}/find-building](https://neonadeuli.life/api/v1/image/heritage/%7Bheritage_id%7D/find-building)
+    * 건축물 이미지 조회 API
+    <br>
+    `POST` [https://neonadeuli.life/api/v1/image/heritage/{heritage_id}/find-building](https://neonadeuli.life/api/v1/image/heritage/%7Bheritage_id%7D/find-building)
         ```json
         {
             "images": [
@@ -286,7 +294,9 @@ UserBookmark {
         }
         ```
 
-    * 문화재 리스트 조회 API : GET https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10
+    * 문화재 리스트 조회 API
+    <br>
+    `GET` https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10
         * 문화재 리스트 조회 테스트를 위해 Heritage 테이블에 더미 데이터 문화재 약 100개 삽입
         * 현재 일단 파라미터에 유저 위도, 유저 경도, Page, limit request 값으로 설정
         * pagination 구조
@@ -302,7 +312,9 @@ UserBookmark {
             }, ...
         ```
 
-    * 문화제 상세 조회 API : `GET` [https://neonadeuli.life/api/v1/heritages/{heritage_id}/details](https://neonadeuli.life/api/v1/heritages/%7Bheritage_id%7D/details)
+    * 문화제 상세 조회 API
+    <br>
+    `GET` [https://neonadeuli.life/api/v1/heritages/{heritage_id}/details](https://neonadeuli.life/api/v1/heritages/%7Bheritage_id%7D/details)
         ```json
         {
             "id": 15,
@@ -324,23 +336,27 @@ UserBookmark {
     * 현재 DB에 총 15439개 문화재 데이터 INSERT 완료했습니다. 이제 해당 데이터로 문화재 조회가 가능합니다.
     * 문화재 리스트 조회에 총 3가지 필터링 기능과 2가지 정렬 옵션을 추가했습니다.
         * 필터링 기능
-            * area_code - 지역 코드를 기반으로 위치 필터링이 가능합니다. 구체적인 필터 코드는 다음과 같습니다.
+            * area_code - 지역 코드를 기반으로 위치 필터링이 가능합니다. 
+            <br> 구체적인 필터 코드는 다음과 같습니다.
                 * 11 : 서울  21 : 부산  22 : 대구  23 : 인천  24 : 광주  25 : 대전  26 : 울산  45 : 세종  31 : 경기  32 : 강원  33 : 충북  34 : 충남  35 : 전북  36 : 전남  37 : 경북  38 : 경남  50 : 제주
-            * heritage_type  - 문화재 유형 코드를 기반으로 유형 필터링이 가능합니다. 구체적인 필터 코드는 다음과 같습니다. 
+            * heritage_type  - 문화재 유형 코드를 기반으로 유형 필터링이 가능합니다. 
+            <br> 구체적인 필터 코드는 다음과 같습니다. 
             (heritage_type은 중복으로 추가 가능)
                 * 11 : 국보  12 : 보물   13 : 사적  14 : 사적및명승   15 : 명승  16 : 천연기념물   17 : 국가무형유산  18 : 국가민속문화유산
     21 : 시도유형문화유산  22 : 시도무형유산   23 : 시도기념물  24 : 시도민속문화유산   25 : 시도등록유산  31 : 문화유산자료
     79 : 국가등록유산  80 : 이북5도 무형유산
-            * distance_range  - 사용자 GPS값 기반으로 거리 필터링이 가능합니다. 구체적인 필터 코드는 다음과 같습니다. (단위는 km 입니다.)
+            * distance_range  - 사용자 GPS값 기반으로 거리 필터링이 가능합니다.
+            <br> 구체적인 필터 코드는 다음과 같습니다. (단위는 km 입니다.)
                 * 0-0.5 , 0.5-1 , 1-10, 10-100, 100-1000 
         * 정렬 기능
-            * sort_by - 문화재 ID 또는 문화재와 사용자 사이 거리  기준으로 정렬이 가능합니다. 
+            * sort_by - 문화재 ID 또는 문화재와 사용자 사이 거리  기준으로 정렬이 가능합니다. <br>
             구체적인 필터 코드는 다음과 같습니다.
                 * id, distance
-            * sort_order - 오름차순 또는 내림차순으로 필터코드는 한글 그대로 설정해두었습니다. 
-            따라서 필터코드는 오름차순 과 내림차순  입니다.
+            * sort_order - 오름차순 또는 내림차순으로 필터코드는 한글 그대로 설정해두었습니다. <br> 
+            따라서 필터코드는 오름차순 과 내림차순 입니다.
 
-    * 예제 URL :
+    * 예제 URL
+    <br>
     [https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10&area_code=11&distance_range=1-10&heritage_type=11&heritage_type=13&sort_by=id&sort_order=오름차순](https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10&area_code=11&distance_range=1-10&heritage_type=11&heritage_type=13&sort_by=id&sort_order=%EC%98%A4%EB%A6%84%EC%B0%A8%EC%88%9C)
 
     * 문화재 이름에 따른 동적 프롬프트 구현을 완료했습니다. <br>
@@ -355,28 +371,29 @@ UserBookmark {
     - 문화재 리스트 조회에 총 2가지 필터링 기능 기능을 추가했습니다
 
         - name - 문화재 이름을 기반으로 이름 필터링이 가능합니다.
-        - era_category - 시대명을 기반으로 시대 필터링이 가능합니다. 구체적인 필터 코드는 다음과 같습니다.
+        - era_category - 시대명을 기반으로 시대 필터링이 가능합니다. <br>
+        구체적인 필터 코드는 다음과 같습니다.
             - 전체, 선사시대, 석기시대, 청동기시대, 철기시대, 삼한시대, 삼국시대, 삼국:고구려, 삼국:백제, 삼국:신라, 발해, 통일신라, 고려시대, 조선시대, 대한제국시대, 일제강점기
 
     #### ⚭ v0.3.3
 
-    네이버 Clova Voice 기능이 추가되었습니다.
+    * 네이버 Clova Voice 기능이 추가되었습니다.
 
-    텍스트를 음성으로 변환하여 mp3 파일로 제공됩니다. <br>
+    * 텍스트를 음성으로 변환하여 mp3 파일로 제공됩니다. <br>
     채팅 메시지 API 응답 값에 추가되어 해당 AI 챗봇의 대답을 음성으로 제공해줍니다.
     
-    수정된 채팅 메시지 API 응답 값 예시
+    * 수정된 채팅 메시지 API 응답 값 예시
 
-    ```json
-    {
-        "id": 68,
-        "session_id": 12,
-        "role": "assistant",
-        "content": "경복궁에서 날씨가 좋으면 경치가 좋은 곳은 경회루이오. 경회루는 경복궁 근정전 서북쪽 연못 안에 세운 건물로, 나라에 경사가 있거나 사신이 왔을 때 연회를 베풀던 곳이오.\n\n경회루의 연못에서는 아름다운 연꽃이 피고, 주변의 버드나무와 어우러져 멋진 풍경을 자랑하오. 특히, 봄과 가을에는 꽃과 단풍이 어우러져 더욱 아름다운 모습을 볼 수 있소.\n\n경회루는 국보 제224호로 지정되어 있으며, 조선 시대 건축 기술의 정수를 보여주는 건축물이오. 날씨가 좋은 날에는 경회루에 올라 아름다운 경치를 감상해 보는 것을 추천하오.",
-        "timestamp": "2024-08-08T01:25:56",
-        "audio_url": "https://zyyosrdkcdcm25870576.cdn.ntruss.com/audio/f1723080-c7ce-4dfa-a054-e320b9ee396f.mp3"
-    }
-    ```
+        ```json
+        {
+            "id": 68,
+            "session_id": 12,
+            "role": "assistant",
+            "content": "경복궁에서 날씨가 좋으면 경치가 좋은 곳은 경회루이오. 경회루는 경복궁 근정전 서북쪽 연못 안에 세운 건물로, 나라에 경사가 있거나 사신이 왔을 때 연회를 베풀던 곳이오.\n\n경회루의 연못에서는 아름다운 연꽃이 피고, 주변의 버드나무와 어우러져 멋진 풍경을 자랑하오. 특히, 봄과 가을에는 꽃과 단풍이 어우러져 더욱 아름다운 모습을 볼 수 있소.\n\n경회루는 국보 제224호로 지정되어 있으며, 조선 시대 건축 기술의 정수를 보여주는 건축물이오. 날씨가 좋은 날에는 경회루에 올라 아름다운 경치를 감상해 보는 것을 추천하오.",
+            "timestamp": "2024-08-08T01:25:56",
+            "audio_url": "https://zyyosrdkcdcm25870576.cdn.ntruss.com/audio/f1723080-c7ce-4dfa-a054-e320b9ee396f.mp3"
+        }
+        ```
 
     * 퀴즈 및 요약 프롬프트 값 조정
 
@@ -388,23 +405,23 @@ UserBookmark {
         * 해당 데이터 제공을 위해 이전의 응답 값에서 일부 형태가 수정되었습니다.
 
     * 수정된 문화재 리스트 조회 API 응답 값 예시
-    ```json
-    {
-        "items": [
-            {
-                "id": 16525,
-                "name": "고흥도천리지석묘군",
-                "location": "전남 고흥군 과역면 도천리 산21번지 외",
-                "heritage_type": "문화유산자료",
-                "image_url": "http://www.cha.go.kr/unisearch/images/cultural_material/1662222.jpg",
-                "distance": 321.6
-            }, ...
-        ],
-        "total_count": 41,
-        "page": 5,
-        "limit": 10
-    }
-    ```
+        ```json
+        {
+            "items": [
+                {
+                    "id": 16525,
+                    "name": "고흥도천리지석묘군",
+                    "location": "전남 고흥군 과역면 도천리 산21번지 외",
+                    "heritage_type": "문화유산자료",
+                    "image_url": "http://www.cha.go.kr/unisearch/images/cultural_material/1662222.jpg",
+                    "distance": 321.6
+                }, ...
+            ],
+            "total_count": 41,
+            "page": 5,
+            "limit": 10
+        }
+        ```
 
     * 문화재 상세 조회 응답 오류 해결
 
@@ -497,11 +514,6 @@ UserBookmark {
  ┃ ┗ 📜user_repository.py
  ┣ 📂router
  ┃ ┣ 📂v1
- ┃ ┃ ┣ 📂__pycache__
- ┃ ┃ ┃ ┣ 📜chat.cpython-311.pyc
- ┃ ┃ ┃ ┣ 📜heritage.cpython-311.pyc
- ┃ ┃ ┃ ┣ 📜image.cpython-311.pyc
- ┃ ┃ ┃ ┗ 📜user.cpython-311.pyc
  ┃ ┃ ┣ 📜chat.py
  ┃ ┃ ┣ 📜heritage.py
  ┃ ┃ ┣ 📜image.py
