@@ -234,8 +234,8 @@ UserBookmark {
     - 추천 질문 API 2가지 방식으로 구현 완료
  
     1. 건축물 기반 추천 질문 생성 
-    <br>
-    `POST` [https://neonadeuli.life/api/v1/chat/{session_id}/building/recommend-questions](https://neonadeuli.life/api/v1/chat/%7Bsession_id%7D/building/recommend-questions)
+
+        `POST` [https://neonadeuli.life/api/v1/chat/{session_id}/building/recommend-questions](https://neonadeuli.life/api/v1/chat/%7Bsession_id%7D/building/recommend-questions)
 
         &rarr; 사용자가 내부 건축물을 이동 시 새로운 건축물의 building_id를 받아 해당 건축물 관련 추천 질문 3가지를 제공
 
@@ -257,8 +257,8 @@ UserBookmark {
         <br>
 
     2. 메시지 기반 추천 질문 생성
-    <br>
-    `GET` [https://neonadeuli.life/api/v1/chat/{session_id}/message/recommend-questions](https://neonadeuli.life/api/v1/chat/%7Bsession_id%7D/message/recommend-questions)
+
+        `GET` [https://neonadeuli.life/api/v1/chat/{session_id}/message/recommend-questions](https://neonadeuli.life/api/v1/chat/%7Bsession_id%7D/message/recommend-questions)
 
         &rarr; 사용자의 질문에 대한 직전 AI 답변을 분석하여 그 다음 추천 질문 3가지를 제공 <br>
         &rarr; 메시지 전송 API에 비동기 처리되어 미리 추천 질문 응답 생성  및 저장 
@@ -271,12 +271,13 @@ UserBookmark {
         ```
 
     * 건축물 이미지 추가 API
-    <br> 
-    `POST` [https://neonadeuli.life/api/v1/image/heritage/{heritage_id}/add-building?building_id=1&description=viaunixue&alt_text=네로](https://neonadeuli.life/api/v1/image/heritage/%7Bheritage_id%7D/add-building?building_id=1&description=viaunixue&alt_text=%EB%84%A4%EB%A1%9C)
+
+        `POST` [https://neonadeuli.life/api/v1/image/heritage/{heritage_id}/add-building?building_id=1&description=viaunixue&alt_text=네로](https://neonadeuli.life/api/v1/image/heritage/%7Bheritage_id%7D/add-building?building_id=1&description=viaunixue&alt_text=%EB%84%A4%EB%A1%9C)
 
     * 건축물 이미지 조회 API
-    <br>
-    `POST` [https://neonadeuli.life/api/v1/image/heritage/{heritage_id}/find-building](https://neonadeuli.life/api/v1/image/heritage/%7Bheritage_id%7D/find-building)
+
+        `POST` [https://neonadeuli.life/api/v1/image/heritage/{heritage_id}/find-building](https://neonadeuli.life/api/v1/image/heritage/%7Bheritage_id%7D/find-building)
+        
         ```json
         {
             "images": [
@@ -295,8 +296,9 @@ UserBookmark {
         ```
 
     * 문화재 리스트 조회 API
-    <br>
-    `GET` https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10
+
+        `GET` https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10
+        
         * 문화재 리스트 조회 테스트를 위해 Heritage 테이블에 더미 데이터 문화재 약 100개 삽입
         * 현재 일단 파라미터에 유저 위도, 유저 경도, Page, limit request 값으로 설정
         * pagination 구조
@@ -313,8 +315,9 @@ UserBookmark {
         ```
 
     * 문화제 상세 조회 API
-    <br>
-    `GET` [https://neonadeuli.life/api/v1/heritages/{heritage_id}/details](https://neonadeuli.life/api/v1/heritages/%7Bheritage_id%7D/details)
+
+        `GET` [https://neonadeuli.life/api/v1/heritages/{heritage_id}/details](https://neonadeuli.life/api/v1/heritages/%7Bheritage_id%7D/details)
+        
         ```json
         {
             "id": 15,
@@ -356,8 +359,8 @@ UserBookmark {
             따라서 필터코드는 오름차순 과 내림차순 입니다.
 
     * 예제 URL
-    <br>
-    [https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10&area_code=11&distance_range=1-10&heritage_type=11&heritage_type=13&sort_by=id&sort_order=오름차순](https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10&area_code=11&distance_range=1-10&heritage_type=11&heritage_type=13&sort_by=id&sort_order=%EC%98%A4%EB%A6%84%EC%B0%A8%EC%88%9C)
+
+        [https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10&area_code=11&distance_range=1-10&heritage_type=11&heritage_type=13&sort_by=id&sort_order=오름차순](https://neonadeuli.life/api/v1/heritages/lists?user_latitude=37.5665&user_longitude=126.9780&page=2&limit=10&area_code=11&distance_range=1-10&heritage_type=11&heritage_type=13&sort_by=id&sort_order=%EC%98%A4%EB%A6%84%EC%B0%A8%EC%88%9C)
 
     * 문화재 이름에 따른 동적 프롬프트 구현을 완료했습니다. <br>
     이제 사용자가 방문하는 문화재에 대한 챗봇이 시작되면 해당 문화재에 맞는 전용 AI챗봇이 대답해줍니다.
@@ -405,6 +408,7 @@ UserBookmark {
         * 해당 데이터 제공을 위해 이전의 응답 값에서 일부 형태가 수정되었습니다.
 
     * 수정된 문화재 리스트 조회 API 응답 값 예시
+    
         ```json
         {
             "items": [
