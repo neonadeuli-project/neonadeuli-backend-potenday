@@ -11,9 +11,9 @@ lint:
 	flake8 .
 
 test:
-	pytest tests/
+	pytest test/
 
 run:
-	uvicorn app.main:app --host 0.0.0.0 --port 8000
+	uvicorn main:app --host 0.0.0.0 --port 8000
 
 all: clean install lint test run
