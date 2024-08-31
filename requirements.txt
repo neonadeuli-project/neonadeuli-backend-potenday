@@ -21,3 +21,6 @@ pygeodesic
 aiofiles
 flake8
 black
+pre-commit
+flake8-black
+isort
