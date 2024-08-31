@@ -14,7 +14,7 @@ jobs:
     steps:
     # Github Repository 체크아웃
     - name: Checkout code
-    - uses: actions/checkout@v4
+      uses: actions/checkout@v4
 
     # python 환경 설정
     - name: Set up Python
@@ -51,7 +51,7 @@ jobs:
     steps:
     # Github Repository 체크아웃
     - name: Checkout code
-    - uses: actions/checkout@v4
+      uses: actions/checkout@v4
 
     # python 환경 설정
     - name: Set up Python
