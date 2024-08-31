@@ -1,22 +1,23 @@
 from sqlalchemy import (
-    Column, 
-    Integer, 
-    String, 
-    Float, 
-    DECIMAL, 
-    Text, 
+    Column,
+    Integer,
+    String,
+    Float,
+    DECIMAL,
+    Text,
     DateTime,
-    ForeignKey
+    ForeignKey,
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from app.core.database import Base
 
+
 class Heritage(Base):
-    __tablename__ = 'heritages'
+    __tablename__ = "heritages"
     id = Column(Integer, primary_key=True, index=True)
-    heritage_type_id = Column(Integer, ForeignKey('heritage_types.type_id'))
+    heritage_type_id = Column(Integer, ForeignKey("heritage_types.type_id"))
     name = Column(String(100))
     name_hanja = Column(String(100))
     description = Column(Text)
@@ -31,11 +32,15 @@ class Heritage(Base):
     area_code = Column(Float)
     image_url = Column(String(255))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    updated_at = Column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )
 
     heritage_types = relationship("HeritageType", back_populates="heritages")
     chat_sessions = relationship("ChatSession", back_populates="heritages")
     buildings = relationship("HeritageBuilding", back_populates="heritages")
     routes = relationship("HeritageRoute", back_populates="heritages")
     bookmarks = relationship("UserBookmark", back_populates="heritages")
-    building_images = relationship("HeritageBuildingImage", back_populates="heritages")
+    building_images = relationship(
+        "HeritageBuildingImage", back_populates="heritages"
+    )

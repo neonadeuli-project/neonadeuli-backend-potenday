@@ -3,8 +3,10 @@ from fastapi import File, Form, UploadFile
 from pydantic import BaseModel
 from datetime import datetime
 
+
 class ImageProcessingResponse(BaseModel):
     message: str
+
 
 class HeritageBuildingImageResponse(BaseModel):
     id: int
@@ -19,11 +21,14 @@ class HeritageBuildingImageResponse(BaseModel):
     class Config:
         from_attributes = True
 
+
 class FindBuildingImageRequest(BaseModel):
     building_id: int
 
+
 class FindBuildingImageResponse(BaseModel):
     images: List[HeritageBuildingImageResponse]
+
 
 class DeleteBuildingImageRequest(BaseModel):
     image_id: int

@@ -9,24 +9,29 @@ class HeritageBuildingInfo(BaseModel):
     name: str
     coordinate: Tuple[float, float] = (0, 0)
 
-# 채팅 방에 제공될 내부 건축물 경로 정보    
+
+# 채팅 방에 제공될 내부 건축물 경로 정보
 class HeritageRouteInfo(BaseModel):
     route_id: int
     name: str
     buildings: List[HeritageBuildingInfo]
 
+
 # 건축물 정보 버튼에 제공될 내부 건축물 정보 요청 값
-class BuildingInfoButtonRequest(BaseModel): 
+class BuildingInfoButtonRequest(BaseModel):
     building_id: int
+
 
 # 건축물 정보 버튼에 제공될 내부 건축물 정보 응답 값
 class BuildingInfoButtonResponse(BaseModel):
     image_url: Optional[str] = None
     bot_response: Optional[str] = None
 
+
 # 퀴즈 버튼에 제공될 퀴즈 정보 요청 값
 class BuildingQuizButtonRequest(BaseModel):
     building_id: int
+
 
 # 퀴즈 버튼에 제공될 퀴즈 정보 응답 값
 class BuildingQuizButtonResponse(BaseModel):
@@ -34,16 +39,19 @@ class BuildingQuizButtonResponse(BaseModel):
     options: List[str]
     answer: int
     explanation: str
-    quiz_count : int
+    quiz_count: int
+
 
 # 건축물 추천 질문 요청 값
 class RecommendedQuestionRequest(BaseModel):
     building_id: int
 
+
 # 건축물 추천 질문 응답 값
 class RecommendedQuestionResponse(BaseModel):
-     building_id: int
-     questions: List[str]
+    building_id: int
+    questions: List[str]
+
 
 # 건축물 리스트 응답 값
 class HeritageListResponse(BaseModel):
@@ -57,12 +65,14 @@ class HeritageListResponse(BaseModel):
     class Config:
         from_attributes = True
 
+
 # 건축물 페이지네이션 응답 값
 class PaginatedHeritageResponse(BaseModel):
     items: List[HeritageListResponse]
-    total_count : int
+    total_count: int
     page: int
     limit: int
+
 
 class HeritageDetailResponse(BaseModel):
     id: int

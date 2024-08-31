@@ -1,23 +1,24 @@
 from sqlalchemy import (
-    Column, 
-    Integer, 
-    String, 
-    Float, 
-    DECIMAL, 
-    Text, 
+    Column,
+    Integer,
+    String,
+    Float,
+    DECIMAL,
+    Text,
     DateTime,
-    ForeignKey
+    ForeignKey,
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from app.core.database import Base
 
+
 class UserBookmark(Base):
-    __tablename__ = 'user_bookmarks'
+    __tablename__ = "user_bookmarks"
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
-    heritage_id = Column(Integer, ForeignKey('heritages.id'))
+    user_id = Column(Integer, ForeignKey("users.id"))
+    heritage_id = Column(Integer, ForeignKey("heritages.id"))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     users = relationship("User", back_populates="bookmarks")

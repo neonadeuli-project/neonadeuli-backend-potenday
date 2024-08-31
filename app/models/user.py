@@ -4,9 +4,10 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from app.core.database import Base
-    
+
+
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     # oauth_id = Column(String(255), unique=True, index=True, nullable=True)
     # email = Column(String(255), unique=True, index=True)
@@ -20,6 +21,6 @@ class User(Base):
     # refresh_token_expires_at = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     last_login = Column(DateTime(timezone=True), onupdate=func.now())
-    
+
     chat_sessions = relationship("ChatSession", back_populates="users")
     bookmarks = relationship("UserBookmark", back_populates="users")
