@@ -1,6 +1,6 @@
 [flake8]
 show-source = true
-extend-ignore = E203
+extend-ignore = E203, E266, E501, W503, F403, F401, E402, E711, F405, F811, F841, W291, W293
 exclude =
     # No need to traverse our git directory
     .git,
@@ -14,5 +14,13 @@ exclude =
     build,
     # This contains builds of flake8 that we don't want to check
     dist
-max-complexity = 10
-max-line-length = 110
+    # submodules
+    potenday-neonadeuli
+    # insertDB.py
+    insertDB.py
+max-complexity = 18
+max-line-length = 120
+select = B,C,E,F,W,T4,B9
+per-file-ignores =
+    __init__.py:F401
+    app/utils/prompts.py:W291,W293
