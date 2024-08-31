@@ -1,0 +1,79 @@
+name: FastAPI CI
+
+on:
+  push:
+    branches: [ develop, release ]
+  pull_request:
+    branches: [ develop, release ]
+
+jobs:
+  lint-and-test:
+    # Ubuntu 최신 환경에서 실행
+    runs-on: ubuntu-latest
+
+    steps:
+    # Github Repository 체크아웃
+    - name: Checkout code
+    - uses: actions/checkout@v4
+
+    # python 환경 설정
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.12"
+
+    # python 버전 표시
+    - name : Display Python version
+      run : python --version
+
+    # Python 패키지 설치
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 코드 포맷팅 Pre-commit 실행
+    - name: Run pre-commit
+      run: pre-commit run --files app/**/*.py test/**/*
+
+    # 테스트 실행
+    - name: Run test
+      run: |
+        pytest
+
+  build:
+    # test 작업이 성공적으로 완료된 후에 실행
+    needs: lint-and-test
+
+    # Ubuntu 최신 환경에서 실행
+    runs-on: ubuntu-latest
+
+    steps:
+    # Github Repository 체크아웃
+    - name: Checkout code
+    - uses: actions/checkout@v4
+
+    # python 환경 설정
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.12"
+
+    # python 패키지 설치
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Docker 이미지 빌드
+    - name: Build Docker image
+      run: docker build -t neonadeuli-app .
+
+    # Docker 컨테이너 실행
+    - name: Run Docker container
+      run: docker run -d -p 8000:8000 neonadeuli-app
+
+    - name: Test API
+      run: |
+        sleep 5
+        curl -f http://localhost:8000/docs || exit 1
