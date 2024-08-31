@@ -1,13 +1,4 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    ForeignKey,
-    String,
-    Text,
-    DECIMAL,
-    Float,
-    DateTime,
-)
+from sqlalchemy import DECIMAL, Column, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -25,13 +16,9 @@ class HeritageBuilding(Base):
     longitude = Column(DECIMAL(11, 8))
     custom_radius = Column(Float)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     building_types = relationship("HeritageType", back_populates="buildings")
     heritages = relationship("Heritage", back_populates="buildings")
     images = relationship("HeritageBuildingImage", back_populates="buildings")
-    route_buildings = relationship(
-        "HeritageRouteBuilding", back_populates="buildings"
-    )
+    route_buildings = relationship("HeritageRouteBuilding", back_populates="buildings")

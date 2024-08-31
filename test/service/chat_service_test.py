@@ -1,6 +1,8 @@
-import pytest
-from unittest.mock import AsyncMock, MagicMock
 from datetime import datetime
+from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+
 from app.error.chat_exception import ChatServiceException
 from app.schemas.heritage import HeritageBuildingInfo, HeritageRouteInfo
 from app.service.chat_service import ChatService
@@ -56,27 +58,15 @@ async def test_create_chat_session_success(chat_service):
             route_id=1,
             name="Test Route",
             buildings=[
-                HeritageBuildingInfo(
-                    building_id=1,
-                    name="Test Building 1"
-                ),
-                HeritageBuildingInfo(
-                    building_id=2,
-                    name="Test Building 2", coordinate=(37.5, 127.0)
-                ),
+                HeritageBuildingInfo(building_id=1, name="Test Building 1"),
+                HeritageBuildingInfo(building_id=2, name="Test Building 2", coordinate=(37.5, 127.0)),
             ],
         )
     ]
 
-    chat_service.chat_repository.create_chat_session = AsyncMock(
-        return_value=mock_session
-    )
-    chat_service.heritage_repository.get_heritage_by_id = AsyncMock(
-        return_value=mock_heritage
-    )
-    chat_service.heritage_repository.get_routes_with_buildings_by_heritages_id = (
-        AsyncMock(return_value=mock_routes)
-    )
+    chat_service.chat_repository.create_chat_session = AsyncMock(return_value=mock_session)
+    chat_service.heritage_repository.get_heritage_by_id = AsyncMock(return_value=mock_heritage)
+    chat_service.heritage_repository.get_routes_with_buildings_by_heritages_id = AsyncMock(return_value=mock_routes)
 
     # Act
     try:
@@ -101,15 +91,9 @@ async def test_create_chat_session_success(chat_service):
                 assert building.coordinate == mock_routes[i].buildings[j].coordinate
 
         # Verify that methods were called
-        chat_service.chat_repository.create_chat_session.assert_awaited_once_with(
-            user_id, heritage_id
-        )
-        chat_service.heritage_repository.get_heritage_by_id.assert_awaited_once_with(
-            heritage_id
-        )
-        chat_service.heritage_repository.get_routes_with_buildings_by_heritages_id.assert_awaited_once_with(
-            heritage_id
-        )
+        chat_service.chat_repository.create_chat_session.assert_awaited_once_with(user_id, heritage_id)
+        chat_service.heritage_repository.get_heritage_by_id.assert_awaited_once_with(heritage_id)
+        chat_service.heritage_repository.get_routes_with_buildings_by_heritages_id.assert_awaited_once_with(heritage_id)
     except ChatServiceException as e:
         pytest.fail(f"ChatService 예외 발생: {str(e)}")
     except Exception as e:
@@ -121,9 +105,7 @@ async def test_create_chat_session_database_error(chat_service):
     # Arrange
     user_id = 1
     heritage_id = 100
-    chat_service.chat_repository.create_chat_session.side_effect = Exception(
-        "DB 연결 에러"
-    )
+    chat_service.chat_repository.create_chat_session.side_effect = Exception("DB 연결 에러")
 
     # Act Assert
     with pytest.raises(ChatServiceException) as exc_info:

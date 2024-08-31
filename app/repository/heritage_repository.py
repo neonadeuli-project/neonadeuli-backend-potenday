@@ -2,31 +2,21 @@ import json
 import logging
 from typing import Any, Dict, List, Optional, Tuple
 
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import (
-    func,
-    and_,
-    Float,
-    update,
-    values,
-    join,
-    tuple_,
-    asc,
-    desc,
-)
-from sqlalchemy.future import select
+from sqlalchemy import Float, and_, asc, desc, func, join, tuple_, update, values
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import joinedload, aliased
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+from sqlalchemy.orm import aliased, joinedload
 
 from app.models.chat.chat_session import ChatSession
 from app.models.enums import EraCategory, SortOrder
-from app.models.heritage.heritage_building_image import HeritageBuildingImage
+from app.models.heritage.heritage import Heritage
 from app.models.heritage.heritage_building import HeritageBuilding
+from app.models.heritage.heritage_building_image import HeritageBuildingImage
 from app.models.heritage.heritage_route import HeritageRoute
 from app.models.heritage.heritage_route_building import HeritageRouteBuilding
-from app.models.heritage.heritage import Heritage
 from app.models.quiz import Quiz
-from app.schemas.heritage import HeritageRouteInfo, HeritageBuildingInfo
+from app.schemas.heritage import HeritageBuildingInfo, HeritageRouteInfo
 from app.utils.common import parse_heritage_dist_range
 
 logger = logging.getLogger(__name__)
@@ -40,49 +30,33 @@ class HeritageRepository:
     # 문화재 ID에 해당하는 문화재 조회
     async def get_heritage_by_id(self, heritage_id: int) -> Heritage:
         result = await self.db.execute(
-            select(Heritage)
-            .options(joinedload(Heritage.heritage_types))
-            .where(Heritage.id == heritage_id)
+            select(Heritage).options(joinedload(Heritage.heritage_types)).where(Heritage.id == heritage_id)
         )
         return result.unique().scalar_one_or_none()
 
     # 건축물 ID로 문화재 이름 조회
     async def get_heritage_building_name_by_id(self, building_id: int) -> str:
-        result = await self.db.execute(
-            select(HeritageBuilding.name).where(
-                HeritageBuilding.id == building_id
-            )
-        )
+        result = await self.db.execute(select(HeritageBuilding.name).where(HeritageBuilding.id == building_id))
         return result.scalar_one_or_none()
 
     # 세션 ID로 문화재 ID 조회
     async def get_heritage_id_by_session(self, session_id: int) -> int:
-        result = await self.db.execute(
-            select(ChatSession.heritage_id).where(ChatSession.id == session_id)
-        )
+        result = await self.db.execute(select(ChatSession.heritage_id).where(ChatSession.id == session_id))
         heritage_id = result.scalar_one_or_none()
         if heritage_id is None:
-            raise ValueError(
-                f"세션 ID {session_id}에 대한 문화재 ID를 찾을 수 없습니다."
-            )
+            raise ValueError(f"세션 ID {session_id}에 대한 문화재 ID를 찾을 수 없습니다.")
         return heritage_id
 
     # 문화재 ID로 문화재 이름 조회
     async def get_heritage_name_by_id(self, heritage_id: int) -> str:
-        result = await self.db.execute(
-            select(Heritage.name).where(Heritage.id == heritage_id)
-        )
+        result = await self.db.execute(select(Heritage.name).where(Heritage.id == heritage_id))
         heritage_name = result.scalar_one_or_none()
         if heritage_name is None:
-            raise ValueError(
-                f"문화재 ID {heritage_id}에 대한 이름을 찾을 수 없습니다."
-            )
+            raise ValueError(f"문화재 ID {heritage_id}에 대한 이름을 찾을 수 없습니다.")
         return heritage_name
 
     # 문화재 건축물 ID 조회
-    async def get_heritage_building_by_id(
-        self, building_id: int
-    ) -> Optional[HeritageBuilding]:
+    async def get_heritage_building_by_id(self, building_id: int) -> Optional[HeritageBuilding]:
         result = await self.db.execute(
             select(HeritageBuilding)
             .where(HeritageBuilding.id == building_id)
@@ -94,9 +68,7 @@ class HeritageRepository:
         return result.scalars().first()
 
     # 문화재 건축물 이미지 조회
-    async def get_heritage_building_images(
-        self, building_id: int
-    ) -> List[HeritageBuildingImage]:
+    async def get_heritage_building_images(self, building_id: int) -> List[HeritageBuildingImage]:
         result = await self.db.execute(
             select(HeritageBuildingImage)
             .options(joinedload(HeritageBuildingImage.buildings))
@@ -106,16 +78,10 @@ class HeritageRepository:
         return result.scalars().all()
 
     # 문화재 건축물 코스 조회
-    async def get_routes_with_buildings_by_heritages_id(
-        self, heritage_id: int
-    ) -> List[HeritageRouteInfo]:
+    async def get_routes_with_buildings_by_heritages_id(self, heritage_id: int) -> List[HeritageRouteInfo]:
         result = await self.db.execute(
             select(HeritageRoute)
-            .options(
-                joinedload(HeritageRoute.route_buildings).joinedload(
-                    HeritageRouteBuilding.buildings
-                )
-            )
+            .options(joinedload(HeritageRoute.route_buildings).joinedload(HeritageRouteBuilding.buildings))
             .where(HeritageRoute.heritage_id == heritage_id)
         )
 
@@ -134,9 +100,7 @@ class HeritageRepository:
                             rb.buildings.latitude,
                         ),
                     )
-                    for rb in sorted(
-                        route.route_buildings, key=lambda x: x.visit_order
-                    )
+                    for rb in sorted(route.route_buildings, key=lambda x: x.visit_order)
                 ],
             )
             for route in routes
@@ -148,9 +112,7 @@ class HeritageRepository:
         return quiz.scalar_one_or_none()
 
     # 문화재 건축물 퀴즈 저장
-    async def save_quiz_data(
-        self, session_id: int, parsed_quiz: Dict[str, Any]
-    ):
+    async def save_quiz_data(self, session_id: int, parsed_quiz: Dict[str, Any]):
         quiz = Quiz(
             session_id=session_id,
             question=parsed_quiz["question"],
@@ -164,13 +126,10 @@ class HeritageRepository:
         return quiz
 
     # 문화재에 속한 건축물 검증
-    async def verify_building_belongs_to_heritage(
-        self, heritage_id: int, building_id: int
-    ) -> bool:
+    async def verify_building_belongs_to_heritage(self, heritage_id: int, building_id: int) -> bool:
         verified_building = await self.db.execute(
             select(HeritageBuilding).where(
-                (HeritageBuilding.id == building_id)
-                & (HeritageBuilding.heritage_id == heritage_id)
+                (HeritageBuilding.id == building_id) & (HeritageBuilding.heritage_id == heritage_id)
             )
         )
         return verified_building.scalar_one_or_none() is not None
@@ -241,9 +200,7 @@ class HeritageRepository:
         # 전체 개수 계산
         if count_total:
             # count_query = query.with_only_columns(func.count()).order_by(None)
-            total_count = await self.db.execute(
-                select(func.count()).select_from(query.subquery())
-            )
+            total_count = await self.db.execute(select(func.count()).select_from(query.subquery()))
             total_count = total_count.scalar()
         else:
             total_count = 0
@@ -251,9 +208,7 @@ class HeritageRepository:
         # 거리 범위 필터링
         if distance_range:
             min_dist, max_dist = parse_heritage_dist_range(distance_range)
-            query = query.where(
-                and_(distance_expr >= min_dist, distance_expr < max_dist)
-            )
+            query = query.where(and_(distance_expr >= min_dist, distance_expr < max_dist))
 
         # 페이지 네이션 적용
         query = query.limit(limit).offset(offset)

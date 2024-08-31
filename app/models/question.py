@@ -1,5 +1,6 @@
 from enum import Enum
-from sqlalchemy import Column, Integer, String, ForeignKey
+
+from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
@@ -11,6 +12,4 @@ class RecommendedQuestion(Base):
     session_id = Column(Integer, ForeignKey("chat_sessions.id"))
     question = Column(String(255))
 
-    chat_sessions = relationship(
-        "ChatSession", back_populates="recommended_questions"
-    )
+    chat_sessions = relationship("ChatSession", back_populates="recommended_questions")

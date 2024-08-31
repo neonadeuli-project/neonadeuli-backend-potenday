@@ -31,24 +31,18 @@ class InvalidImageFormatException(ImageException):
     """유효하지 않은 이미지 형식일 때 발생하는 예외"""
 
     def __init__(self, filename: str, allowed_formats: list):
-        super().__init__(
-            f"파일 '{filename}'의 형식이 유효하지 않습니다. 허용된 형식: {', '.join(allowed_formats)}"
-        )
+        super().__init__(f"파일 '{filename}'의 형식이 유효하지 않습니다. 허용된 형식: {', '.join(allowed_formats)}")
 
 
 class NoImagesFoundException(ImageException):
     """건물에 대한 이미지를 찾을 수 없을 때 발생하는 예외"""
 
     def __init__(self, building_id: int):
-        super().__init__(
-            f"건축물 ID {building_id}에 대한 이미지를 찾을 수 없습니다."
-        )
+        super().__init__(f"건축물 ID {building_id}에 대한 이미지를 찾을 수 없습니다.")
 
 
 class S3UploadException(Exception):
     def __init__(self, filename: str, error: str):
         self.filename = filename
         self.error = error
-        super().__init__(
-            f"파일명 : {filename} 인 파일을 S3에 업로드를 하지 못했습니다.: {error}"
-        )
+        super().__init__(f"파일명 : {filename} 인 파일을 S3에 업로드를 하지 못했습니다.: {error}")

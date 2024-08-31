@@ -1,8 +1,9 @@
-from typing import List, Optional
-from pydantic import BaseModel
 from datetime import datetime
+from typing import List, Optional
 
-from app.schemas.heritage import HeritageRouteInfo, HeritageBuildingInfo
+from pydantic import BaseModel
+
+from app.schemas.heritage import HeritageBuildingInfo, HeritageRouteInfo
 
 
 # 새로운 채팅 세션 생성 요청 값

@@ -10,9 +10,7 @@ class UserNotFoundException(AuthServiceException):
     """사용자를 찾을 수 없을 때 발생하는 예외"""
 
     def __init__(self, identifier: str):
-        super().__init__(
-            f"식별자 '{identifier}'에 해당하는 사용자를 찾을 수 없습니다."
-        )
+        super().__init__(f"식별자 '{identifier}'에 해당하는 사용자를 찾을 수 없습니다.")
 
 
 class InvalidTokenException(AuthServiceException):

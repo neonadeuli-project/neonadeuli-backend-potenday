@@ -1,13 +1,10 @@
 import logging
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 from datetime import datetime
 
-from app.error.auth_exception import (
-    DatabaseOperationException,
-    InvalidTokenException,
-    UserNotFoundException,
-)
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+
+from app.error.auth_exception import DatabaseOperationException, InvalidTokenException, UserNotFoundException
 from app.models.user import User
 
 logger = logging.getLogger(__name__)

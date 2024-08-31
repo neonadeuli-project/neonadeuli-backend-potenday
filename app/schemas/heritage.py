@@ -1,6 +1,7 @@
-from typing import List, Optional, Tuple
-from pydantic import BaseModel
 from datetime import datetime
+from typing import List, Optional, Tuple
+
+from pydantic import BaseModel
 
 
 # 채팅 방에 제공될 내부 건축물 정보

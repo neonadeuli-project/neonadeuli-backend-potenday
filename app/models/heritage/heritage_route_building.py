@@ -1,13 +1,4 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    Float,
-    DECIMAL,
-    Text,
-    DateTime,
-    ForeignKey,
-)
+from sqlalchemy import DECIMAL, Column, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -21,11 +12,7 @@ class HeritageRouteBuilding(Base):
     building_id = Column(Integer, ForeignKey("heritage_buildings.id"))
     visit_order = Column(Integer)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     routes = relationship("HeritageRoute", back_populates="route_buildings")
-    buildings = relationship(
-        "HeritageBuilding", back_populates="route_buildings"
-    )
+    buildings = relationship("HeritageBuilding", back_populates="route_buildings")

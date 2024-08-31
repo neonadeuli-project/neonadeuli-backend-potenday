@@ -1,10 +1,12 @@
 import logging
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import SQLAlchemyError
-from fastapi import Depends, HTTPException
 from datetime import timedelta
 
+from fastapi import Depends, HTTPException
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.core.deps import get_db
+from app.core.security import create_access_token
 from app.error.auth_exception import (
     AuthServiceException,
     DatabaseOperationException,
@@ -12,9 +14,8 @@ from app.error.auth_exception import (
     UserCreationException,
     UserNotFoundException,
 )
-from app.repository.user_repository import UserRepository
 from app.models.user import User
-from app.core.security import create_access_token
+from app.repository.user_repository import UserRepository
 
 logger = logging.getLogger(__name__)
 
@@ -27,20 +28,14 @@ class UserService:
     # 헤더 Token 기반 임시 유저 생성
     async def create_temp_user(self, username: str) -> User:
         try:
-            user = await self.user_repository.create_temp_user(
-                name=username, token=None
-            )
+            user = await self.user_repository.create_temp_user(name=username, token=None)
 
             if not user:
                 raise UserCreationException("사용자 생성 실패")
 
-            access_token = create_access_token(
-                data={"sub": str(user.id)}, expires_delta=timedelta(hours=1)
-            )
+            access_token = create_access_token(data={"sub": str(user.id)}, expires_delta=timedelta(hours=1))
 
-            updated_user = await self.user_repository.update_user_token(
-                user.id, access_token
-            )
+            updated_user = await self.user_repository.update_user_token(user.id, access_token)
 
             if not updated_user:
                 raise UserCreationException("사용자 토큰 업데이트 실패")
@@ -75,9 +70,7 @@ class UserService:
             if not user:
                 raise InvalidTokenException(token)
 
-            success = await self.user_repository.update_user_token(
-                user.id, None
-            )
+            success = await self.user_repository.update_user_token(user.id, None)
             if not success:
                 raise DatabaseOperationException("토큰 업데이트 실패")
 

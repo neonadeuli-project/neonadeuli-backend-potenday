@@ -1,7 +1,7 @@
-import uuid
-import boto3
 import logging
+import uuid
 
+import boto3
 from botocore.exceptions import ClientError
 from fastapi import UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -27,17 +27,11 @@ class S3Service:
 
     async def upload_file(self, file: UploadFile, folder: str = ""):
         file_extension = file.filename.split(".")[-1].lower()
-        file_name = (
-            f"{folder}/{uuid.uuid4()}.{file_extension}"
-            if folder
-            else f"{uuid.uuid4()}.{file_extension}"
-        )
+        file_name = f"{folder}/{uuid.uuid4()}.{file_extension}" if folder else f"{uuid.uuid4()}.{file_extension}"
 
         try:
             contents = await file.read()
-            self.s3_client.put_object(
-                Bucket=self.bucket_name, Key=file_name, Body=contents
-            )
+            self.s3_client.put_object(Bucket=self.bucket_name, Key=file_name, Body=contents)
             return f"https://{self.cdn_domain}/{file_name}"
         except ClientError as e:
             logging.error(f"S3 업로드 중 오류 발생: {e}")

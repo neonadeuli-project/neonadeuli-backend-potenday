@@ -1,11 +1,11 @@
-import logging
-import json
-import uuid
-import requests
 import http.client
-from typing import Dict, List
+import json
+import logging
+import uuid
 from http import HTTPStatus
+from typing import Dict, List
 
+import requests
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
@@ -55,13 +55,9 @@ class CLOVAStudioExecutor:
             return res, status
         else:
             error_message = (
-                res.get("status", {}).get("message", "Unknown error")
-                if isinstance(res, dict)
-                else "Unknown error"
+                res.get("status", {}).get("message", "Unknown error") if isinstance(res, dict) else "Unknown error"
             )
-            raise ValueError(
-                f"오류 발생: HTTP {status}, 메시지: {error_message}"
-            )
+            raise ValueError(f"오류 발생: HTTP {status}, 메시지: {error_message}")
 
 
 class ChatCompletionExecutor(CLOVAStudioExecutor):
@@ -93,16 +89,12 @@ class ChatCompletionExecutor(CLOVAStudioExecutor):
                             response_data += decoded_line + "\n"
                     return response_data
                 else:
-                    raise ValueError(
-                        f"오류 발생: HTTP {r.status_code}, 메시지: {r.text}"
-                    )
+                    raise ValueError(f"오류 발생: HTTP {r.status_code}, 메시지: {r.text}")
             else:
                 if r.status_code == HTTPStatus.OK:
                     return r.json()
                 else:
-                    raise ValueError(
-                        f"오류 발생: HTTP {r.status_code}, 메시지: {r.text}"
-                    )
+                    raise ValueError(f"오류 발생: HTTP {r.status_code}, 메시지: {r.text}")
 
 
 class SlidingWindowExecutor(CLOVAStudioExecutor):
@@ -114,19 +106,13 @@ class SlidingWindowExecutor(CLOVAStudioExecutor):
             # completion_request = {"messages": sliding_window}
             logger.info(f"SlidingWindowExecutor request: {completion_request}")
             result, status = super().execute(completion_request, endpoint)
-            logger.info(
-                f"SlidingWindowExecutor result: {result}, status: {status}"
-            )
+            logger.info(f"SlidingWindowExecutor result: {result}, status: {status}")
             if status == 200:
                 # 슬라이딩 윈도우 적용 후 메시지를 반환
                 return result["result"]["messages"]
             else:
-                error_message = result.get("status", {}).get(
-                    "message", "Unknown error"
-                )
-                raise ValueError(
-                    f"오류 발생: HTTP {status}, 메시지: {error_message}"
-                )
+                error_message = result.get("status", {}).get("message", "Unknown error")
+                raise ValueError(f"오류 발생: HTTP {status}, 메시지: {error_message}")
         except Exception as e:
             print(f"Error in SlidingWindowExecutor: {e}")
             raise
@@ -148,9 +134,7 @@ class ClovaService:
 
     async def get_chatting(self, session_id: int, sliding_window: list) -> str:
         try:
-            logger.info(
-                f"get_chatting input - session_id: {session_id}, sliding_window: {sliding_window}"
-            )
+            logger.info(f"get_chatting input - session_id: {session_id}, sliding_window: {sliding_window}")
 
             # 세션 ID로 heritage id 조회
             # heritage_id = await self.heritage_repository.get_heritage_id_by_session(session_id)
@@ -160,17 +144,13 @@ class ClovaService:
 
             session = await self.chat_repository.get_chat_session(session_id)
             if not session:
-                raise ValueError(
-                    f"{session_id}번 ID는 유효한 세션 ID가 아닙니다."
-                )
+                raise ValueError(f"{session_id}번 ID는 유효한 세션 ID가 아닙니다.")
 
             # 새로운 System 프롬프트 전달
             dynamic_prompt = generate_dynamic_prompt(session.heritage_name)
 
             # 새로운 System 프롬프트로 sliding window 업데이트
-            updated_sliding_window = self.update_sliding_window_system(
-                sliding_window, dynamic_prompt
-            )
+            updated_sliding_window = self.update_sliding_window_system(sliding_window, dynamic_prompt)
 
             if sliding_window is None:
                 sliding_window = []
@@ -188,9 +168,7 @@ class ClovaService:
                 "maxTokens": 3000,
             }
 
-            adjusted_sliding_window = sliding_window_executor.execute(
-                request_data
-            )
+            adjusted_sliding_window = sliding_window_executor.execute(request_data)
             logger.info(f"Adjusted sliding window: {adjusted_sliding_window}")
 
             # 마지막 메시지 ASSISTANT 응답인 경우 이를 resopnse로 사용
@@ -219,27 +197,19 @@ class ClovaService:
                 }
 
                 logger.info(f"요청 데이터 완료: {completion_request_data}")
-                response = completion_executor.execute(
-                    completion_request_data, stream=False
-                )
+                response = completion_executor.execute(completion_request_data, stream=False)
 
                 # 응답 로깅
-                logger.info(
-                    f"세션 ID {session_id}에 대한 Raw한 API 응답 {response}"
-                )
+                logger.info(f"세션 ID {session_id}에 대한 Raw한 API 응답 {response}")
 
                 response_text = parse_non_stream_response(response)
-                logger.info(
-                    f"세션 ID {session_id}에 대한 Parsed 된 응답 {response_text}"
-                )
+                logger.info(f"세션 ID {session_id}에 대한 Parsed 된 응답 {response_text}")
 
                 # 새로운 sliding window에 방금 얻은 response를 더해서 반환
                 # adjusted_sliding_window.append({"role":"assistant", "content":response_text})
 
             # new_sliding_window 크기 관리
-            new_sliding_window = self.manage_sliding_window_size(
-                adjusted_sliding_window
-            )
+            new_sliding_window = self.manage_sliding_window_size(adjusted_sliding_window)
 
             return {
                 "response": response_text,
@@ -249,18 +219,14 @@ class ClovaService:
             logger.error(
                 f"채팅 요청 처리 중 API 오류 발생: {e.api_name}, 상태 코드: {e.status_code}, 오류 메시지: {e.error_message}"
             )
-            raise ChatServiceException(
-                f"채팅 요청 처리 중 API 오류 발생: {e.api_name}"
-            )
+            raise ChatServiceException(f"채팅 요청 처리 중 API 오류 발생: {e.api_name}")
         except Exception as e:
             logger.error(f"채팅 요청 처리 중 예상치 못한 오류 발생: {str(e)}")
             raise ChatServiceException("채팅 요청 처리 중 오류 발생")
 
     # 여기서 퀴즈 버튼을 누를 때, 현재 위치의 이름을 받아와야 합니다. (ex - 근정전)
     # async def get_quiz(self, session_id: int, building_name: str) -> Dict[str, str]:
-    async def get_info_quiz_rec(
-        self, session_id: int, building_name: str, request_type: ChatbotType
-    ) -> str:
+    async def get_info_quiz_rec(self, session_id: int, building_name: str, request_type: ChatbotType) -> str:
         try:
             completion_executor = ChatCompletionExecutor(
                 host=self.api_completion_url,
@@ -298,23 +264,15 @@ class ClovaService:
                 "seed": 0,
             }
 
-            logger.info(
-                f"{request_type.value.capitalize()} request data: {completion_request_data}"
-            )
-            response = completion_executor.execute(
-                completion_request_data, stream=False
-            )
-            logger.info(
-                f"Raw API response for session ID {session_id}: {response}"
-            )
+            logger.info(f"{request_type.value.capitalize()} request data: {completion_request_data}")
+            response = completion_executor.execute(completion_request_data, stream=False)
+            logger.info(f"Raw API response for session ID {session_id}: {response}")
 
             # 경복궁의 중심이 되는 건물은 다음 중 무엇일까요?\n1. 근정전\n2. 사정전\n3. 교태전\n4. 강녕전\n5. 향원정 형식
             # 이 반환값이 full_conversation에 저장되어야 합니다.
             # 아니라면 퀴즈의 정답을 사용자가 선택할때까지 이 질문을 가지고 있어야 해요....
             response_text = parse_non_stream_response(response)
-            logger.info(
-                f"Parsed response for session ID {session_id}: {response_text}"
-            )
+            logger.info(f"Parsed response for session ID {session_id}: {response_text}")
 
             return response_text
 
@@ -322,21 +280,13 @@ class ClovaService:
             logger.error(
                 f"퀴즈 생성 중 API 오류 발생: {e.api_name}, 상태 코드: {e.status_code}, 오류 메시지: {e.error_message}"
             )
-            raise ChatServiceException(
-                f"퀴즈 생성 중 API 오류 발생: {e.api_name}"
-            )
+            raise ChatServiceException(f"퀴즈 생성 중 API 오류 발생: {e.api_name}")
         except ValueError as e:
-            logger.error(
-                f"유효하지 않은 요청 타입입니다. 반드시 퀴즈 또는 정보 타입이어야 합니다.: {str(e)}"
-            )
+            logger.error(f"유효하지 않은 요청 타입입니다. 반드시 퀴즈 또는 정보 타입이어야 합니다.: {str(e)}")
             raise ChatServiceException(str(e))
         except Exception as e:
-            logger.error(
-                f"{request_type.value} 생성 중 예상치 못한 오류 발생: {str(e)}"
-            )
-            raise ChatServiceException(
-                f"{request_type.value} 생성 중 오류 발생: {str(e)}"
-            )
+            logger.error(f"{request_type.value} 생성 중 예상치 못한 오류 발생: {str(e)}")
+            raise ChatServiceException(f"{request_type.value} 생성 중 오류 발생: {str(e)}")
 
     # content는 돌았던 코스 텍스트가 담겨있으면 됩니다.
     async def get_summary(self, session_id: int, content: str) -> str:
@@ -363,21 +313,15 @@ class ClovaService:
                 "seed": 0,
             }
 
-            response = completion_executor.execute(
-                completion_request_data, stream=False
-            )
+            response = completion_executor.execute(completion_request_data, stream=False)
             response_text = parse_non_stream_response(response)
-            logger.info(
-                f"Parsed response for session ID {session_id}: {response_text}"
-            )
+            logger.info(f"Parsed response for session ID {session_id}: {response_text}")
 
             # keywords = response_text.split()[1:]    # '너나들이' 키워드 제외
             # keywords = [keyword.rstrip() for keyword in response_text.split() if keyword.strip()]
             # keywords = process_hashtags(response_text)
             keywords = extract_hashtags(response_text)
-            logger.info(
-                f"Extracted keywords for session ID {session_id}: {keywords}"
-            )
+            logger.info(f"Extracted keywords for session ID {session_id}: {keywords}")
 
             return {"keywords": keywords}
 
@@ -385,16 +329,12 @@ class ClovaService:
             logger.error(
                 f"요약 생성 중 API 오류 발생: {e.api_name}, 상태 코드: {e.status_code}, 오류 메시지: {e.error_message}"
             )
-            raise ChatServiceException(
-                f"요약 생성 중 API 오류 발생: {e.api_name}"
-            )
+            raise ChatServiceException(f"요약 생성 중 API 오류 발생: {e.api_name}")
         except Exception as e:
             logger.error(f"요약 생성 중 예상치 못한 오류 발생: {str(e)}")
             raise ChatServiceException("요약 생성 중 오류 발생")
 
-    async def get_questions(
-        self, session_id: int, bot_response: str
-    ) -> List[str]:
+    async def get_questions(self, session_id: int, bot_response: str) -> List[str]:
         try:
             completion_executor = ChatCompletionExecutor(
                 host=self.api_completion_url,
@@ -424,15 +364,11 @@ class ClovaService:
             }
 
             logger.info(f"추천 질문 request 데이터: {completion_request_data}")
-            response = completion_executor.execute(
-                completion_request_data, stream=False
-            )
+            response = completion_executor.execute(completion_request_data, stream=False)
             logger.info(f"추천 질문에 대한 Raw한 대답: {response}")
 
             response_text = parse_non_stream_response(response)
-            questions = [
-                q.strip() for q in response_text.split("\n") if q.strip()
-            ]
+            questions = [q.strip() for q in response_text.split("\n") if q.strip()]
 
             return questions[:3]
 
@@ -440,23 +376,15 @@ class ClovaService:
             logger.error(
                 f"추천 질문 생성 중 API 오류 발생: {e.api_name}, 상태 코드: {e.status_code}, 오류 메시지: {e.error_message}"
             )
-            raise ChatServiceException(
-                f"추천 질문 생성 중 API 오류 발생: {e.api_name}"
-            )
+            raise ChatServiceException(f"추천 질문 생성 중 API 오류 발생: {e.api_name}")
         except Exception as e:
             logger.error(f"추천 질문 생성 중 예상치 못한 오류 발생: {str(e)}")
-            raise ChatServiceException(
-                f"추천 질문 생성 중 오류 발생: {str(e)}"
-            )
+            raise ChatServiceException(f"추천 질문 생성 중 오류 발생: {str(e)}")
 
-    def manage_sliding_window_size(
-        self, sliding_window: List[Dict[str, str]]
-    ) -> List[Dict[str, str]]:
+    def manage_sliding_window_size(self, sliding_window: List[Dict[str, str]]) -> List[Dict[str, str]]:
         max_window_size = settings.MAX_SLIDING_WINDOW_SIZE
         if len(sliding_window) > max_window_size:
-            return [sliding_window[0]] + sliding_window[
-                -(max_window_size - 1) :
-            ]
+            return [sliding_window[0]] + sliding_window[-(max_window_size - 1) :]
         return sliding_window
 
     def update_sliding_window_system(

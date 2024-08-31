@@ -1,13 +1,4 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    Float,
-    DECIMAL,
-    Text,
-    DateTime,
-    ForeignKey,
-)
+from sqlalchemy import DECIMAL, Column, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -32,15 +23,11 @@ class Heritage(Base):
     area_code = Column(Float)
     image_url = Column(String(255))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     heritage_types = relationship("HeritageType", back_populates="heritages")
     chat_sessions = relationship("ChatSession", back_populates="heritages")
     buildings = relationship("HeritageBuilding", back_populates="heritages")
     routes = relationship("HeritageRoute", back_populates="heritages")
     bookmarks = relationship("UserBookmark", back_populates="heritages")
-    building_images = relationship(
-        "HeritageBuildingImage", back_populates="heritages"
-    )
+    building_images = relationship("HeritageBuildingImage", back_populates="heritages")

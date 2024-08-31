@@ -1,5 +1,5 @@
-import re
 import logging
+import re
 from typing import Dict, Tuple
 
 from app.error.chat_exception import QuizParsingException
@@ -33,21 +33,15 @@ def parse_quiz_content(quiz_content: str) -> Dict[str, any]:
             raise ValueError("최소 2개 이상의 선택지가 필요합니다.")
 
         # 정답 추출
-        answer_match = re.search(
-            r"정답\s*:?\s*(\d+)(번)?", quiz_content, re.IGNORECASE
-        )
+        answer_match = re.search(r"정답\s*:?\s*(\d+)(번)?", quiz_content, re.IGNORECASE)
         if answer_match:
             answer = answer_match.group(1)
             if int(answer) > len(options):
-                raise QuizParsingException(
-                    f"정답 번호({answer})가 선택지 개수({len(options)})를 초과합니다."
-                )
+                raise QuizParsingException(f"정답 번호({answer})가 선택지 개수({len(options)})를 초과합니다.")
             logger.info(f"추출된 정답 값 : {answer}")
         else:
             # 정답을 찾지 못한 경우, '정답'이라는 단어 뒤의 첫 번째 숫자를 찾습니다.
-            fallback_answer_match = re.search(
-                r"정답.*?(\d+)", quiz_content, re.IGNORECASE | re.DOTALL
-            )
+            fallback_answer_match = re.search(r"정답.*?(\d+)", quiz_content, re.IGNORECASE | re.DOTALL)
             if fallback_answer_match:
                 answer = fallback_answer_match.group(1)
                 logger.info(f"대체 방법으로 추출된 정답 값 : {answer}")
@@ -55,9 +49,7 @@ def parse_quiz_content(quiz_content: str) -> Dict[str, any]:
                 raise QuizParsingException("정답 값을 추출할 수 없습니다.")
 
         # 설명 추출
-        explanation_match = re.search(
-            r"해설\s*:?\s*(.+)$", quiz_content, re.IGNORECASE | re.DOTALL
-        )
+        explanation_match = re.search(r"해설\s*:?\s*(.+)$", quiz_content, re.IGNORECASE | re.DOTALL)
         if explanation_match:
             explanation = explanation_match.group(1).strip()
             logger.info(f"추출된 설명: {explanation}")

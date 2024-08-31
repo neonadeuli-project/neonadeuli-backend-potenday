@@ -1,16 +1,14 @@
 import logging
-from typing import List
 import uuid
-from botocore.exceptions import ClientError
+from typing import List
+
 import boto3
+from botocore.exceptions import ClientError
 from fastapi import UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
-from app.error.heritage_exceptions import (
-    BuildingNotFoundException,
-    HeritageNotFoundException,
-)
+from app.error.heritage_exceptions import BuildingNotFoundException, HeritageNotFoundException
 from app.error.image_exception import (
     ImageNotFoundException,
     ImageUploadException,
@@ -43,9 +41,7 @@ class ImageService:
         file_extension = file.filename.split(".")[-1].lower()
 
         if file_extension not in allowed_extensions:
-            raise InvalidImageFormatException(
-                file.filename, allowed_extensions
-            )
+            raise InvalidImageFormatException(file.filename, allowed_extensions)
 
         try:
             return await self.s3_service.upload_file(file, folder="images")
@@ -62,14 +58,10 @@ class ImageService:
     #         raise ImageUploadException(file.filename, str(e))
 
     # 문화재 이미지 업데이트
-    async def update_heritage_image(
-        self, heritage_id: int, file: UploadFile
-    ) -> Heritage:
+    async def update_heritage_image(self, heritage_id: int, file: UploadFile) -> Heritage:
         image_url = await self.upload_image(file)
         try:
-            result = await self.image_repository.update_heritage_image(
-                heritage_id, image_url
-            )
+            result = await self.image_repository.update_heritage_image(heritage_id, image_url)
             return result
         except HeritageNotFoundException:
             raise
@@ -103,9 +95,7 @@ class ImageService:
             raise
 
     # 건축물 이미지 조회
-    async def get_building_image(
-        self, heritage_id: int, building_id: int
-    ) -> List[HeritageBuildingImage]:
+    async def get_building_image(self, heritage_id: int, building_id: int) -> List[HeritageBuildingImage]:
         try:
             # 건축물과 문화재 유효성 검증
             belongs_to_heritage = await self.heritage_repository.verify_building_belongs_to_heritage(
@@ -117,24 +107,15 @@ class ImageService:
                 )
 
             # 이미지 조회
-            building_images = await self.image_repository.get_building_images(
-                heritage_id, building_id
-            )
-            return [
-                HeritageBuildingImageResponse.model_validate(image)
-                for image in building_images
-            ]
+            building_images = await self.image_repository.get_building_images(heritage_id, building_id)
+            return [HeritageBuildingImageResponse.model_validate(image) for image in building_images]
         except NoImagesFoundException:
             raise
 
     # 건축물 이미지 삭제
-    async def delete_building_image(
-        self, image_id: int
-    ) -> HeritageBuildingImage:
+    async def delete_building_image(self, image_id: int) -> HeritageBuildingImage:
         try:
-            result = await self.image_repository.delete_building_image(
-                image_id
-            )
+            result = await self.image_repository.delete_building_image(image_id)
             return result
         except ImageNotFoundException:
             raise

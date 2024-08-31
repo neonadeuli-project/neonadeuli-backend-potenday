@@ -1,5 +1,6 @@
 import enum
-from sqlalchemy import Column, Integer, ForeignKey, DateTime, Enum, Text
+
+from sqlalchemy import Column, DateTime, Enum, ForeignKey, Integer, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -15,8 +16,6 @@ class ChatMessage(Base):
     content = Column(Text)
     timestamp = Column(DateTime(timezone=True), default=func.now())
     created_at = Column(DateTime(timezone=True), default=func.now())
-    updated_at = Column(
-        DateTime(timezone=True), default=func.now(), onupdate=func.now()
-    )
+    updated_at = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
 
     chat_sessions = relationship("ChatSession", back_populates="chat_messages")

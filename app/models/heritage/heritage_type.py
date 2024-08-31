@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Enum
+from sqlalchemy import Column, Enum, Float, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
@@ -13,6 +13,4 @@ class HeritageType(Base):
     default_radius = Column(Float)
 
     heritages = relationship("Heritage", back_populates="heritage_types")
-    buildings = relationship(
-        "HeritageBuilding", back_populates="building_types"
-    )
+    buildings = relationship("HeritageBuilding", back_populates="building_types")
