@@ -19,3 +19,5 @@ boto3
 haversine
 pygeodesic
 aiofiles
+flake8
+black
