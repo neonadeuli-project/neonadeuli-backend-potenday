@@ -1,0 +1,33 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+-   repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+    - id: black
+      language_version: python3.12
+-   repo: https://github.com/pycqa/flake8
+    rev: 7.1.1
+    hooks:
+    - id: flake8
+      args: [
+        "--config=./flake8",
+        "--max-line-length=120",
+        "--extend-ignore=E203,E266,E501,W503,F403,F401,E402,E711,F405,F811,F841,W291,W293,B950,B008,B904,B907",
+        "--max-complexity=18",
+        "--select=B,C,E,F,W,T4,B9",
+        "--exclude=.git,__pycache__,docs/source/conf.py,old,build,dist,potenday-neonadeuli,insertDB.py",
+      ]
+      additional_dependencies: [flake8-bugbear, flake8-black]
+-   repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+    - id: isort
+      args: ["--profile", "black", "--line-length", "120"]
