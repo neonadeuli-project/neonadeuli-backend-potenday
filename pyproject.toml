@@ -9,12 +9,20 @@ python = "3.12.4"
 fastapi = "0.0.4"
 
 [tool.black]
-line-length = 79
+line-length = 120
 target-version = ['py37', 'py38']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
   # The following are specific to Black, you probably don't want those.
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
   | blib2to3
   | tests/data
   | profiling
@@ -24,3 +32,7 @@ extend-exclude = '''
 # want stable formatting across releases, you should keep
 # this off.
 preview = true
+
+[tool.isort]
+profile = "black"
+line_length = 120
