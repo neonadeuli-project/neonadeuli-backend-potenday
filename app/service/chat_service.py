@@ -7,7 +7,6 @@ import re
 import time
 from typing import Any, Callable, Dict, List
 
-import aiofiles
 import requests
 from fastapi import UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession

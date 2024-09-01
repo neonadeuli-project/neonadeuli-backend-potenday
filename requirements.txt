@@ -12,6 +12,7 @@ alembic
 pytest
 cryptography
 mysqlclient
+requests
 alembic
 aiohttp
 python-jose
