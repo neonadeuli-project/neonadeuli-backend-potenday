@@ -18,7 +18,6 @@ repos:
     hooks:
     - id: flake8
       args: [
-        "--config=./flake8",
         "--max-line-length=120",
         "--extend-ignore=E203,E266,E501,W503,F403,F401,E402,E711,F405,F811,F841,W291,W293,B950,B008,B904,B907",
         "--max-complexity=18",
