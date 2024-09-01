@@ -102,7 +102,7 @@ jobs:
 
     # Docker 이미지 빌드
     - name: Build Docker image
-      run: docker build -t neonadeuli-app .
+      run: docker build --progress=plain -t neonadeuli-app .
 
     # Docker 컨테이너 실행
     - name: Run Docker container
@@ -110,7 +110,7 @@ jobs:
 
     # Docker 컨테이너 로그 출력
     - name: Check Docker container logs
-      run: docker logs neonadeuli-app-container
+      run: docker logs neonadeuli-app-container --tail 100
 
     # Docker 컨테이너 상태 확인
     - name: Check Docker container status
@@ -119,4 +119,4 @@ jobs:
     - name: Test API
       run: |
         sleep 30
-        curl -v -f http://localhost:8000/docs || exit 1
+        curl -f http://localhost:8000/health || exit 1
