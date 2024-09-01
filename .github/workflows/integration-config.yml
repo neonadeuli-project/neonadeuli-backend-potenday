@@ -6,6 +6,41 @@ on:
   pull_request:
     branches: [ develop, release ]
 
+env:
+      API_V1_STR: ${{ secrets.API_V1_STR }}
+      BACKEND_CORS_ORIGINS: ${{ secrets.BACKEND_CORS_ORIGINS }}
+      BACKEND_SESSION_SECRET_KEY: ${{ secrets.BACKEND_SESSION_SECRET_KEY }}
+      PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      MYSQL_SERVER: ${{ secrets.MYSQL_SERVER }}
+      MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+      MYSQL_DB: ${{ secrets.MYSQL_DB }}
+      CLOVA_API_KEY: ${{ secrets.CLOVA_API_KEY }}
+      CLOVA_API_KEY_PRIMARY_VAL: ${{ secrets.CLOVA_API_KEY_PRIMARY_VAL }}
+      CLOVA_SLIDING_API_HOST: ${{ secrets.CLOVA_SLIDING_API_HOST }}
+      CLOVA_COMPLETION_API_HOST: ${{ secrets.CLOVA_COMPLETION_API_HOST }}
+      MAX_TOKEN: ${{ secrets.MAX_TOKEN }}
+      CLOVA_VOICE_URL: ${{ secrets.CLOVA_VOICE_URL }}
+      CLOVA_VOICE_CLIENT_ID: ${{ secrets.CLOVA_VOICE_CLIENT_ID }}
+      CLOVA_VOICE_CLIENT_SECRET: ${{ secrets.CLOVA_VOICE_CLIENT_SECRET }}
+      NCP_ACCESS_KEY: ${{ secrets.NCP_ACCESS_KEY }}
+      NCP_SECRET_KEY: ${{ secrets.NCP_SECRET_KEY }}
+      NCP_REGION: ${{ secrets.NCP_REGION }}
+      NCP_ENDPOINT: ${{ secrets.NCP_ENDPOINT }}
+      BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+      CDN_DOMAIN: ${{ secrets.CDN_DOMAIN }}
+      MAX_SLIDING_WINDOW_SIZE: ${{ secrets.MAX_SLIDING_WINDOW_SIZE }}
+      QUIZ_COUNT: ${{ secrets.QUIZ_COUNT }}
+      MAX_RETRIES: ${{ secrets.MAX_RETRIES }}
+      RETRY_DELAY: ${{ secrets.RETRY_DELAY }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
+      DEFAULT_IMAGE_URL: ${{ secrets.DEFAULT_IMAGE_URL }}
+
 jobs:
   lint-and-test:
     # Ubuntu 최신 환경에서 실행
