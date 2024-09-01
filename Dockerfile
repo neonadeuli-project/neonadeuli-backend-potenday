@@ -10,7 +10,11 @@ WORKDIR /app
 
 # 시스템 의존성 설치
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends gcc \
+    && apt-get install -y --no-install-recommends \
+       gcc \
+       libssl-dev \
+       libffi-dev \
+       libmysqlclient-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

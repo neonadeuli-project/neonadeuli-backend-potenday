@@ -14,7 +14,6 @@ pytest
 cryptography
 mysqlclient
 requests
-alembic
 aiohttp
 python-jose
 boto3
