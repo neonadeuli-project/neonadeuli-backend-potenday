@@ -106,9 +106,13 @@ jobs:
 
     # Docker 컨테이너 실행
     - name: Run Docker container
-      run: docker run -d -p 8000:8000 neonadeuli-app
+      run: docker run -d -p 8000:8000 --name neonadeuli-app-container neonadeuli-app
+
+    # Docker 컨테이너 로그 출력
+    - name: Check Docker container logs
+      run: docker logs neonadeuli-app-container
 
     - name: Test API
       run: |
-        sleep 5
+        sleep 10
         curl -f http://localhost:8000/docs || exit 1
