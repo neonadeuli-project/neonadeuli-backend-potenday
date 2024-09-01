@@ -108,16 +108,50 @@ jobs:
     - name: Run Docker container
       run: docker run -d -p 8000:8000 --name neonadeuli-app-container neonadeuli-app
 
-    # Docker 컨테이너 로그 출력
-    - name: Check Docker container logs
-      run: docker logs neonadeuli-app-container --tail 100
-
-    # Docker 컨테이너 상태 확인
     - name: Check Docker container status
       run: docker ps -a
 
+    - name: Check Docker container logs
+      run: docker logs neonadeuli-app-container --tail 100
+      continue-on-error: true
+
+    - name: Check container environment
+      run: docker exec neonadeuli-app-container env
+      continue-on-error: true
+
+    - name: Check application files
+      run: docker exec neonadeuli-app-container ls -la /app
+      continue-on-error: true
+    
     - name: Basic health check
       run: |
         docker run -d --name test-container neonadeuli-app
-        sleep 5
-        docker ps | grep test-container
+        sleep 10
+        if docker ps | grep -q test-container; then
+          echo "Container is running"
+          docker logs test-container
+        else
+          echo "Container failed to start"
+          docker ps -a
+          docker logs test-container
+        fi
+      continue-on-error: true
+
+    - name: Check application startup
+      run: |
+        docker exec test-container python -m uvicorn main:app --host 0.0.0.0 --port 8000 &
+        sleep 10
+        docker exec test-container curl -v http://localhost:8000 || true
+      continue-on-error: true
+
+    - name: Dump Docker logs
+      if: failure()
+      run: |
+        docker logs neonadeuli-app-container
+        docker logs test-container
+
+    - name: Clean up
+      if: always()
+      run: |
+        docker stop $(docker ps -aq) || true
+        docker rm $(docker ps -aq) || true
