@@ -12,9 +12,6 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        gcc \
-       libssl-dev \
-       libffi-dev \
-       libmysqlclient-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
