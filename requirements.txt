@@ -3,6 +3,7 @@ uvicorn
 sqlalchemy==1.4.39
 pymysql==1.1.1
 pydantic
+pydantic-settings>=2.0.0
 passlib
 bcrypt
 aiomysql
