@@ -1,6 +1,6 @@
 <div align="center" >
 
-# Neonadeuli (너나들이)
+# 너나들이 (Neonadeuli) 🏕️
 
 <b>Mobile AI National Heritage Interpretation Service</b>
 
@@ -9,9 +9,33 @@
             object-fit: cover; 
             border-radius: 20px;" >
 
+<h3> "국가유산의 아름다움을 당신의 눈에 담아보세요" </h3>
+
+AI 모바일 국가 유산 해설 서비스
+
+<br />
+
+국가유산의 풍부한 이야기와 숨겨진 비밀을 당신의 여정에 담아보세요.
+
+방문한 국가유산들이 모여 당신만의 특별한 문화 지도를 만들어갑니다.
+
+시간을 넘나드는 여행으로 채워진 당신의 소중한 경험을 기록하고 공유해보세요.
+
+과거와 현재가 만나는 순간, 당신의 이야기가 역사의 한 페이지가 됩니다. 🏛️✨"
+
+</br>
+
+[✨ <너나들이> 사용해보기](https://www.xn--910b8hh6hdsz.com/)
+
+[🔗 wiki 바로가기](https://github.com/neonadeuli-project/Neonadeuli-Backend/wiki)
+
+<br>
+
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fneonadeuli-project&count_bg=%23F2E2C3&title_bg=%23555555&icon=sparkpost.svg&icon_color=%23E7E7E7&title=neonadeuli&edge_flat=false)](https://hits.seeyoufarm.com)
 
 </div>
+
+<br />
 
 ## ✨ Project Introduction
 
